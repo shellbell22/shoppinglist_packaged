@@ -1,23 +1,29 @@
+var $ = require('jquery');
+
+import {Shoppinglist} from "./shoppinglist";
+
+var myshoppinglist;
+console.log(myshoppinglist);
 
 $(document).ready(function() {
 
 if (localStorage.items) {
-	var items = JSON.parse(localStorage.items);
+	myshoppinglist = new Shoppinglist(JSON.parse(localStorage.items));
 }
 
 else {
-	var items = [];
-	items.push('milk');
-	items.push('apples');
+	myshoppinglist = new Shoppinglist();
+	myshoppinglist.additem('milk');
+	myshoppinglist.additem('apples');
 	localStorage.items = JSON.stringify(items);
 }
 
 
-	console.log(items);
+	//console.log(items);
 	console.log(localStorage.items);
 
-	for (index in items) {
-		$('.missionlist').append("<li class='listitem'> <img class='checkdiv' src='images/check.png'/>" + " " + items[index] + " " + "<img class='removediv' src='images/remove.png'/></li>");
+	for (let index in myshoppinglist.items) {
+		$('.missionlist').append("<li class='listitem'> <img class='checkdiv' src='images/check.png'/>" + " " + myshoppinglist.items[index] + " " + "<img class='removediv' src='images/remove.png'/></li>");
 	}
 
 $('#userInput').submit(function(event) {
